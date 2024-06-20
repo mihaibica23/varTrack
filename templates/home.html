@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navbar.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-icons.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icon.png') }}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-lg ">
+        <div class="container ">
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="home()">Home</a>
+                    </li>
+                    {% if user.elev==True: %}
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="proiecte()">Proiecte</a>
+                    </li>
+                    {%endif%}
+                    {% if user.elev==False%}
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="create()">Create</a>
+                    </li>
+                    {%endif%}
+                    {% if user.admin==True%}
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="admin()">Consolă Admin</a>
+                    </li>
+                    {%endif%}
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="">Program</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="profil()">Profilul meu</a>
+                    </li>
+                </ul>
+            <div>
+        </div>
+      </nav>
+        <div class="top-leaders "> 
+        {% if is_first == False and is_last==False: %}
+          {% for elev in user_list: %}
+            <div onclick="window.location.href = '/profil/{{elev.adresa}}'" class="leader">
+              <img align="center" class ="imgProfile"src="{{ elev.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+              <div class="info">
+                <p class="pSus">{{ elev.nume }}</p>
+                <p class="pJos">Credite: {{ elev.total_credits }}</p>
+              </div>
+          </div>
+          {% endfor %}
+        {% endif %}
+        {% if is_first == True: %}
+        <div class="leader">
+          <img align="center" class ="imgProfile"src="{{ url_for('static', filename='Premiu.jpg') }}">
+          <div class="info">
+            <p class="pSus">Felicitări!</p>
+            <p class="pJos">Ești numărul #1!</p>
+          </div>
+        </div>
+          {% for elev in user_list: %}
+            <div onclick="window.location.href = '/profil/{{elev.adresa}}'" class="leader">
+              <img align="center" class ="imgProfile"src="{{ elev.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+              <div class="info">
+                <p class="pSus">{{ elev.nume }}</p>
+                <p class="pJos">Credite: {{ elev.total_credits }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="top-leaders">
+        {% if is_last == True: %}
+          {% for elev in user_list[:-1]: %}
+            <div onclick="window.location.href = '/profil/{{elev.adresa}}'" class="leader">
+              <img align="center" class ="imgProfile"src="{{ elev.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+              <div class="info">
+                <p class="pSus">{{ elev.nume }}</p>
+                <p class="pJos">Credite: {{ elev.total_credits }}</p>
+              </div>
+            </div>
+          {% endfor %}
+          <div class="leader">
+            <img align="center" class ="imgProfile"src="https://em-content.zobj.net/source/microsoft/379/crying-face_1f622.png">
+            <div class="info">
+              <p class="pSus">Ești pe</p>
+              <p class="pJos">ultimul loc</p>
+            </div>
+          </div>
+          {% for elev in user_list[1:]: %}
+            <div onclick="window.location.href = '/profil/{{elev.adresa}}'" class="leader">
+              <img align="center" class ="imgProfile"src="{{ elev.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+              <div class="info">
+                <p class="pSus">{{ elev.nume }}</p>
+                <p class="pJos">Credite: {{ elev.total_credits }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+        </div>
+      </div>
+      <video id="background-video" autoplay loop muted>
+        <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
+      </video>
+      <div class="cutie" align="center">
+        {% for proiect in proiecte_ins:%}
+        <!--<div onclick="window.location.href = '/proiect/{{proiect.adresaP}}'" class = "proiect">-->
+        <div onclick="window.location.href='/proiect/{{proiect.adresaP}}'" class = "proiect">
+          <img class="imgProiect" src="https://images.pond5.com/children-walking-school-cute-colorful-illustration-136160623_iconl_wide_nowm.jpeg">
+          <h3><center>{{ proiect.nume }}</center></h3>
+          <h4 align="center">{{ User.query.get(proiect.creator_id).nume }}</h4>
+          {% if user.elev == True: %}
+          <h5 align="center">Credite: {% for association in db.session.query(user_project_association).filter_by(user_id=user.id, project_id=proiect.id) %}
+            {{ association.credits }}  {% endfor %}</h5>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </body>
+</html>
+
+<script>
+    function responsive() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  function leaderboard() {
+    window.location.href = "/leaderboard";
+  }
+  function profil()
+  {
+    window.location.href="profil/{{user.adresa}}"
+  }
+  function home()
+  {
+    window.location.href="/home"
+  }
+  function proiecte()
+  {
+    window.location.href="/proiecte"
+  }
+  function create()
+  {
+    window.location.href="/create"
+  }
+  function admin()
+  {
+    window.location.href="/admin"
+  }
+  </script>
+  <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='click-scroll.js') }}"></script>
+  <script src="{{ url_for('static', filename='custom.js') }}"></script>
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>

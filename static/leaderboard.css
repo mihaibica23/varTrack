@@ -1,0 +1,80 @@
+
+
+body {
+  margin: 0!important;
+  padding: 0!important;
+}
+
+h1, h2 {
+  text-align: center!important;
+}
+
+.top-leaders {
+  display: flex!important;
+  flex-wrap: wrap!important; /* Allow items to wrap on smaller screens */
+  justify-content: space-around!important;
+  margin: 20px auto!important;
+  flex-direction: row-reverse;
+}
+
+.leader {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  text-align: center!important;
+  padding: 10px!important;
+  border: 1px solid #ddd!important;
+  border-radius: 5px!important;
+  margin: 0 10px!important;
+  width: calc(33% - 20px)!important; /* Adjust width based on number of leaders per row */
+  
+}
+
+.leader img {
+  width: 100%!important;
+  height: auto!important; /* Maintain aspect ratio for images */
+  border-radius: 50%!important;
+}
+
+.leader .info {
+  margin-top: 10px!important;
+}
+
+.players-list {
+  list-style: none!important;
+  padding: 0!important;
+  margin: 20px auto!important;
+}
+
+.players-list li {
+  display: flex!important;
+  justify-content: space-between!important;
+  padding: 10px!important;
+  border-bottom: 1px solid #ddd!important;
+}
+  .imgProfile {
+  /* Removed, not needed for aspect ratio */
+  width: 30%!important;
+  height: 100px!important; /* Set a fixed height for responsiveness */
+  max-width: 100px!important;
+  object-fit: cover!important; /* Ensures image fills the container */
+  border-radius: 50%; /* Maintains the round shape */
+}
+
+/* Flex order for desktop (default) */
+.leader:nth-child(1) {
+  order: 1;
+}
+
+.leader:nth-child(2) {
+  order: 3;
+}
+
+
+
+/* Optional: Reset default styles (use cautiously) */
+/*
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*/

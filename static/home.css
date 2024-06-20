@@ -1,0 +1,193 @@
+#background-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+
+  h1, h2 {
+    text-align: center!important;
+  }
+  
+  .top-leaders {
+    display: flex!important;
+    flex-wrap: wrap!important; /* Allow items to wrap on smaller screens */
+    justify-content: space-around!important; /* Distribute evenly with some space */
+    margin: 20px auto!important;
+  }
+  
+  .leader {
+    box-shadow: rgba(0,86,248, 0.4) -5px 5px, rgba(0,82,242, 0.3) -10px 10px, rgba(0,63,225, 0.2) -15px 15px, rgba(0,45,207, 0.1) -20px 20px, rgba(0,40,198, 0.05) -25px 25px;
+    text-align: center!important;
+    border: 2px solid rgb(9, 56, 243)!important;
+    border-radius: 5px!important;
+    width: 30%!important;
+    background: rgba(255,255,255,0.9);
+    
+  }
+  
+  .leader img.imgProfile {
+    margin-top: 3%;
+    width: 30%!important;
+    height: auto!important; /* Maintain aspect ratio */
+    border-radius: 50%!important;
+    justify-content: center!important;
+    margin-right: 2%!important;
+    
+  }
+  .leader .info {
+    margin-top: 3%;
+    justify-content: center;
+    font-size: 2vw!important;
+    margin-left: 0;
+  }
+  
+  .players-list {
+    list-style: none!important;
+    padding: 0!important;
+    margin: 20px auto!important;
+  }
+  
+  .players-list li {
+    display: flex!important;
+    justify-content: space-between!important;
+    padding: 10px!important;
+    border-bottom: 1px solid #ddd!important;
+  }
+  
+  /* Flex order for desktop (optional) */
+  .leader:nth-child(1) {
+    order: 2!important;
+  }
+  
+  .leader:nth-child(2) {
+    order: 0!important;
+  }
+  
+  /* Mobile order using flex-direction (optional) */
+
+  body{
+    margin:0!important;
+  }
+  .pJos
+  {
+    margin-bottom: 3%;
+  }
+  .pSus
+  {
+    margin-bottom: 0%;
+  }
+
+  .cutie
+  {
+    border: 2px solid rgb(9, 56, 243);
+    border-radius: 20px;
+    width:70%;
+    height:auto;
+    min-height: 50vh;
+    margin:auto;
+    box-shadow: 0px -25px 20px -20px rgba(0, 0, 0, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45), 0px 25px 20px -20px rgba(0, 0, 0, 0.45), -25px 0 20px -20px rgba(0, 0, 0, 0.45);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.0000001%;
+    background: rgba(255,255,255,0.9);
+  }
+  .proiect
+{
+    width: 90%;
+    height:270px;
+    background-color: #005a9f;
+    position: relative;
+    border: white solid 1px;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    color:white;
+
+}
+.imgProiect
+{
+  width:100%;
+  height:55%;
+  
+}
+
+/*Cutie*/
+@media (max-width: 599px) {
+  .cutie {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 600px) {
+  .cutie {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .cutie {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1600px) {
+  .cutie {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+/*celelalte*/
+  @media screen and (min-width:1040px){
+    .leader img.imgProfile {
+      margin-top: 3%;
+      width: 25%!important;
+      height: auto!important; /* Maintain aspect ratio */
+      border-radius: 50%!important;
+      justify-content: center!important;
+      margin-right: 2%!important;
+    }
+    .leader .info {
+      margin-top: 3%;
+      justify-content: center;
+      font-size: 1.2vw!important;
+      margin-left: 0;
+    }
+    .pJos
+    {
+      margin-bottom: 3%;
+    }
+  }
+  @media screen and (min-width:1200px){
+    .leader img.imgProfile {
+      margin-top: 1%;
+      width: 22%!important;
+      height: auto!important; /* Maintain aspect ratio */
+      border-radius: 50%!important;
+      justify-content: center!important;
+      margin-right: 2%!important;
+    }
+    .leader .info {
+      margin-top: 1%;
+      justify-content: center;
+      font-size: 1vw!important;
+      margin-left: 0;
+    }
+    .pJos
+    {
+      margin-bottom: 1%;
+    }
+  }
+  @media (max-width: 783px) {
+    .cutie {
+      width:90%;
+    }
+  }
+  @media (max-width: 606px) {
+    .cutie {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
