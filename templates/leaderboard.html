@@ -36,6 +36,11 @@
                     <a class="nav-link click-scroll" href="javascript:void(0)" onclick="create()">Create</a>
                   </li>
                 {%endif%}
+                {% if user_curent.admin==True%}
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="admin()">Consolă Admin</a>
+                    </li>
+                {%endif%}
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
                 </li>
@@ -54,7 +59,7 @@
   <div class="top-leaders">
     {% for user in users[:3] %}
       {% if users.index(user)==0: %}
-      <div style="background-color:  #FFD700!important;" class="leader">
+      <div onclick="window.location.href = '/profil/{{user.adresa}}'" style="background-color:  #FFD700!important;" class="leader">
         <img class ="imgProfile"src="{{ user.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
         <div class="info">
           <p>{{ user.nume }}</p>
@@ -63,7 +68,7 @@
       </div>
       {% endif %}
       {% if users.index(user)==1: %}
-      <div style="margin-top: 100px!important; background-color:   #d7d7d7!important;"class="leader">
+      <div onclick="window.location.href = '/profil/{{user.adresa}}'" style="margin-top: 100px!important; background-color:   #d7d7d7!important;"class="leader">
         <img class ="imgProfile"src="{{ user.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
         <div class="info">
           <p>{{ user.nume }}</p>
@@ -72,7 +77,7 @@
       </div>
       {% endif %}
       {% if users.index(user)==2: %}
-      <div style="margin-top: 200px!important; background-color: #ad8a56!important;" class="leader">
+      <div onclick="window.location.href = '/profil/{{user.adresa}}'"  style="margin-top: 200px!important; background-color: #ad8a56!important;" class="leader">
         <img  class ="imgProfile"src="{{ user.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
         <div class="info">
           <p>{{ user.nume }}</p>
@@ -116,6 +121,10 @@
     function create()
     {
     window.location.href="/create"
+    }
+    function admin()
+    {
+    window.location.href="/admin"
     }
     </script>
     <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>

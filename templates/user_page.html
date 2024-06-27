@@ -33,6 +33,11 @@
                     <a class="nav-link click-scroll" href="javascript:void(0)" onclick="create()">Create</a>
                   </li>
                 {%endif%}
+                {% if user.admin==True%}
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="admin()">Consolă Admin</a>
+                    </li>
+                {%endif%}
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
                 </li>
@@ -92,6 +97,10 @@
   function create()
   {
     window.location.href="/create"
+  }
+  function admin()
+  {
+    window.location.href="/admin"
   }
   </script>
   <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>

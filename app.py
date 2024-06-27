@@ -6,12 +6,20 @@ from flask_bcrypt import Bcrypt
 from random import random, randint
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 #Creare baza de date
-app.secret_key = 'thereisnosecretkey'  
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bazadate.db'
+#app.secret_key = 'thereisnosecretkey'  
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bazadate.db'
+#db = SQLAlchemy(app)
+DATABASE_URI = f'mysql+mysqldb://mihai:Var2.0team@34.118.111.202/bazadate?charset=utf8mb4'
+# configuration
+app.config["SECRET_KEY"] = "Var2.0team"
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True 
 db = SQLAlchemy(app)
+engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 #Tabel Conexiune User - Project
 user_project_association = Table(
     'user_project_association',
@@ -25,30 +33,32 @@ user_project_association = Table(
 class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String(80), unique=True, nullable=False)
-  parola = db.Column(db.String, nullable=False)
+  parola = db.Column(db.String(80), nullable=False)
   def set_password(self, parola):
     self.parola = bcrypt.generate_password_hash(parola).decode('utf-8')
   def check_password(self, parola):
     return bcrypt.check_password_hash(self.parola, parola)
   nume = db.Column(db.String(80), nullable=False)
   elev = db.Column(db.Boolean)
-  adresa=db.Column(db.String)
+  adresa=db.Column(db.String(200))
   vizibil = db.Column(db.Boolean)
-  clasa = db.Column(db.String)
-  linkImagineU = db.Column(db.String)
+  clasa = db.Column(db.String(5))
+  linkImagineU = db.Column(db.String(200))
   admin = db.Column(db.Boolean)
+  verificare = db.Column(db.Boolean)
+
   projects = relationship('Project', secondary=user_project_association, back_populates='users')
   
 #Profil proiecte
 class Project(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   nume = db.Column(db.String(80), nullable=False)
-  adresaP=db.Column(db.String)
-  linkImagine = db.Column(db.String, nullable=False)
+  adresaP=db.Column(db.String(200))
+  linkImagine = db.Column(db.String(200), nullable=False)
   vizibil = db.Column(db.Boolean)
   creator_id = deferred(Column(Integer, ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE')))
   users = relationship('User', secondary=user_project_association, back_populates='projects')
-  clasa = db.Column(db.String, nullable=False)
+  clasa = db.Column(db.String(200), nullable=False)
   avansat = db.Column(db.Boolean, nullable=False)
 
 def calculate_user_credits(user):
@@ -184,9 +194,9 @@ def register():
       else:
         clasa = None
       if elevV == "DA":
-        new_user = User(email=email, parola=parola,nume=nume, elev=True, adresa = adresa, vizibil=True, clasa = clasa, linkImagineU="", admin=False)
+        new_user = User(email=email, parola=parola,nume=nume, elev=True, adresa = adresa, vizibil=True, clasa = clasa, linkImagineU="", admin=False, verificare=False)
       elif elevV=="NU":
-        new_user = User(email=email, parola=parola,nume=nume, elev=False, adresa = adresa, vizibil=True, linkImagineU="", admin=False)
+        new_user = User(email=email, parola=parola,nume=nume, elev=False, adresa = adresa, vizibil=True, linkImagineU="", admin=False, verificare=False)
       new_user.set_password(parola)
       db.session.add(new_user)
       db.session.commit()
@@ -363,13 +373,26 @@ def admin():
     return render_template('admin.html', user=user)
   else:
     return redirect('/home')
-
+@app.route('/verificareAdmin', methods=['GET', 'POST'])
+def verificareAdmin():
+   if 'email' not in session:
+    return redirect('/login')
+   if request.method == 'POST':
+    user = User.query.filter_by(email=session['email']).first()
+    if user.admin==True:
+      if user.verificare == True:
+        user.verificare=False
+      else:
+         user.verificare=True
+      db.session.commit()
+      return redirect('/admin')
 @app.route('/finaldean', methods=['GET','POST'])
 def final():
    if 'email' not in session:
     return redirect('/login')
-   user = User.query.filter_by(email=session['email']).first()
-   if(user.admin==True):
+   if request.method == 'POST':
+    user = User.query.filter_by(email=session['email']).first()
+    if(user.admin==True and user.verificare==True):
       users = User.query.filter_by(elev=True, vizibil=True).all()
       projects = Project.query.filter_by(vizibil=True).all()
       for elev in users:
@@ -389,8 +412,10 @@ def final():
           elev.vizibil=False
       for proiect in projects:
          proiect.vizibil=False
+      user.verificare=False
       db.session.commit()
       return redirect('/admin')
+   return redirect('/admin')
         
    
 
