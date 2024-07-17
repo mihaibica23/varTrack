@@ -124,8 +124,10 @@
           <h3><center>{{ proiect.nume }}</center></h3>
           <h4 align="center">{{ User.query.get(proiect.creator_id).nume }}</h4>
           {% if user.elev == True: %}
-          <h5 align="center">Credite: {% for association in db.session.query(user_project_association).filter_by(user_id=user.id, project_id=proiect.id) %}
-            {{ association.credits }}  {% endfor %}</h5>
+          <h5 align="center">Credite: {% for association in db.session.query(user_project_association).filter_by(user_id=user.id, project_id=proiect.id) %}{{ association.credits }}  {% endfor %}\</h5>
+          {% endif %}
+          {% if user.elev == False: %}
+          <h5 align="center">Clasa: {{proiect.clasa}}</h5>
           {% endif %}
         </div>
         {% endfor %}

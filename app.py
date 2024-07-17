@@ -13,7 +13,8 @@ bcrypt = Bcrypt(app)
 #app.secret_key = 'thereisnosecretkey'  
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bazadate.db'
 #db = SQLAlchemy(app)
-DATABASE_URI = f'mysql+mysqldb://mihai:Var2.0team@34.118.111.202/bazadate?charset=utf8mb4'
+#DATABASE_URI = f'mysql+mysqldb://mihai:Var2.0team@34.118.111.202/bazadate?charset=utf8mb4'
+DATABASE_URI = f'mysql+mysqldb://root:Var2.0team@localhost/bazadate?charset=utf8mb4'
 # configuration
 app.config["SECRET_KEY"] = "Var2.0team"
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
@@ -290,7 +291,7 @@ def kick_user():
         user_to_kick = User.query.get(user_id)
         if user_to_kick in project.users:
             project.users.remove(user_to_kick)
-            db.session.trttv5()
+            db.session.commit()
 
         return redirect('/proiect/' + project.adresaP)
 

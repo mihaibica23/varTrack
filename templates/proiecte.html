@@ -50,7 +50,7 @@
     {% for project in available_projects %}
     {%if user.elev == True: %}
     <div class = "proiect">
-      <form method="POST" action="{{ url_for('proiecte') }}">
+      <form method="POST" onsubmit="return confirmare()" action="{{ url_for('proiecte') }}">
         <input type="hidden" name="join_project_id" value="{{ project.id }}">
         <div class = "inscriere">
           <input type="submit" class="btninscriere"value="ÎNSCRIE-TE">
@@ -89,6 +89,13 @@
   {
     window.location.href="/proiecte"
   }
+  function confirmare() {
+  if (confirm("Sigur vrei să te înscri în acest proiect? Dacă intri nu vei mai putea ieși.")) {
+    return true;
+  } else {
+    return false;
+  }
+}
   </script>
   <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
   <script src="{{ url_for('static', filename='click-scroll.js') }}"></script>
