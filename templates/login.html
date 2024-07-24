@@ -1,0 +1,76 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4787a0980e.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="p.png">
+    <title>Login</title>
+</head>
+<body>
+    <section class="side">
+      <img src="{{url_for('static', filename='side.png')}}" align="middle" height="10%">
+    </section>
+
+    <section class="main" >
+        <div class="login-container">
+        <p class="title">BINE AI REVENIT</p>
+        <div class="separator"></div>
+        <p class="welcome-message"></p>
+            <div class="form-control">
+                <input id="email" type="text" name="email" placeholder="Email">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="form-control">
+                <input id="pass" type="password" name="parola"placeholder="Parola">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <button class="submit" id="log" onclick="login()">Login</button>
+                   
+
+            <img src="{{url_for('static', filename='var.jpeg')}}" class="logo">
+        </div>
+         
+    </section>
+
+    <script>
+        function login() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("pass").value;
+
+    var data = {
+        email: email,
+        parola: password
+    };
+
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        // Check the server response and perform actions based on it
+        if (data.success) {
+            window.location.href = '/home'; // Redirect on success
+        } else {
+            // Handle other responses or show error messages
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+#users-list
+{
+    width:50vw;
+    display:grid;
+    grid-template-columns: repeat(3, 200px);
+    column-gap: 50px;
+}

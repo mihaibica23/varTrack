@@ -1,0 +1,339 @@
+
+/*---------------------------------------
+  CUSTOM PROPERTIES ( VARIABLES )             
+-----------------------------------------*/
+:root {
+  --white-color:                  #ffffff;
+  --primary-color:                #00a4e4;
+  --secondary-color:              #007ec3;
+  --section-bg-color:             #f0f8ff;
+  --dark-color:                   #000000;
+  --navbar-bg-color:              #005a9f;
+  --highlight-icon-color:         #ff0100;
+
+  --body-font-family:             'DM Sans', sans-serif;
+
+
+}
+
+body {
+    background: var(--white-color);
+    font-family: var(--body-font-family); 
+}
+
+
+/*---------------------------------------
+  TYPOGRAPHY               
+-----------------------------------------*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -1px;
+}
+
+h1 {
+  font-size: var(--h1-font-size);
+  letter-spacing: -2px;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: var(--h2-font-size);
+  letter-spacing: -2px;
+}
+
+h3 {
+  font-size: var(--h3-font-size);
+}
+
+h4 {
+  font-size: var(--h4-font-size);
+}
+
+h5 {
+  font-size: var(--h5-font-size);
+  line-height: normal;
+}
+
+h6 {
+  font-size: var(--h6-font-size);
+}
+
+ul li {
+  color: var(--p-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-normal);
+}
+
+a, 
+button {
+  touch-action: manipulation;
+  transition: all 0.3s;
+}
+
+a {
+  color: var(--p-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+
+/*---------------------------------------
+  CUSTOM BUTTON               
+-----------------------------------------*/
+.custom-btn,
+.navbar-expand-lg .navbar-nav .nav-link.custom-btn,
+.navbar-nav .nav-link.custom-btn {
+  background: var(--navbar-bg-color);
+  border-radius: 100px;
+  color: var(--white-color);
+  font-size: var(--copyright-text-font-size);
+  font-weight: var(--font-weight-bold);
+  padding: 10px 20px;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link.custom-btn,
+.navbar-nav .nav-link.custom-btn {
+  background: var(--secondary-color);
+}
+
+.navbar-expand-lg .navbar-nav .nav-link.custom-btn,
+.navbar-nav .nav-link.custom-btn {
+  margin-left: 20px;
+}
+
+.custom-border-btn {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.custom-btn:hover,
+.navbar-expand-lg .navbar-nav .nav-link.custom-btn:hover,
+.navbar-nav .nav-link.custom-btn:hover {
+  background: var(--primary-color);
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  color: var(--white-color);
+}
+
+
+/*---------------------------------------
+  NAVIGATION              
+-----------------------------------------*/
+.sticky-wrapper {
+  background: var(--navbar-bg-color);
+  border:none;
+}
+
+.navbar {
+  background: var(--navbar-bg-color);
+  z-index: 9;
+  right: 0;
+  left: 0;
+  transition: all 0.3s;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  
+  display: flex; /* Add this line */
+  justify-content: space-between;
+
+}
+
+.navbar-brand {
+  font-size: 20px!important;
+  line-height: 1.2rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+  text-transform: uppercase;
+}
+
+.brand-logo {
+  font-size: 38px;
+}
+
+.brand-text {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.navbar-nav .nav-link {
+  color: var(--white-color);
+  font-size: var(--menu-font-size);
+  font-weight: var(--font-weight-medium);
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.navbar-nav .nav-link.active, 
+.navbar-nav .nav-link:hover {
+  color: var(--primary-color);
+}
+
+.navbar-toggler {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  margin: 0;
+  width: 30px;
+  height: 35px;
+  outline: none;
+  border:none;
+  
+}
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+  border: none!important; /* Override any default border */
+}
+
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background: transparent;
+  border:none;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before,
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+  transition: top 300ms 50ms ease, -webkit-transform 300ms 350ms ease;
+  transition: top 300ms 50ms ease, transform 300ms 350ms ease;
+  transition: top 300ms 50ms ease, transform 300ms 350ms ease, -webkit-transform 300ms 350ms ease;
+  top: 0;
+  border:none;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:before {
+  transform: rotate(45deg);
+  border:none;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:after {
+  transform: rotate(-45deg);
+  border:none;
+}
+
+.navbar-toggler .navbar-toggler-icon {
+  background: var(--white-color);
+  transition: background 10ms 300ms ease;
+  display: block;
+  width: 30px;
+  height: 2px;
+  position: relative;
+  border:none;
+}
+
+.navbar-toggler .navbar-toggler-icon:before,
+.navbar-toggler .navbar-toggler-icon:after {
+  transition: top 300ms 350ms ease, -webkit-transform 300ms 50ms ease;
+  transition: top 300ms 350ms ease, transform 300ms 50ms ease;
+  transition: top 300ms 350ms ease, transform 300ms 50ms ease, -webkit-transform 300ms 50ms ease;
+  position: absolute;
+  right: 0;
+  left: 0;
+  background: var(--white-color);
+  width: 30px;
+  height: 2px;
+  content: '';
+  border:none;
+}
+
+.navbar-toggler .navbar-toggler-icon::before {
+  top: -8px;
+  border:none;
+}
+
+.navbar-toggler .navbar-toggler-icon::after {
+  top: 8px;
+  border:none;
+}
+
+.logo img {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 2.5px;
+}
+
+/*---------------------------------------
+  RESPONSIVE STYLES               
+-----------------------------------------*/
+@media screen and (max-width: 1500px) {
+   .speakers-text-info {
+    padding: 50px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+
+  h3 {
+    font-size: 32px;
+  }
+
+  h4 {
+    font-size: 28px;
+  }
+
+  h5 {
+    font-size: 20px;
+  }
+
+  h6 {
+    font-size: 18px;
+  }
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding-left: 0;
+  }
+
+  .navbar-nav .nav-link {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+@media screen and (min-width:608px){
+  .navbar-toggler {
+    position: relative !important;
+    
+    height:35px;
+  }
+}
+
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 38px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 28px;
+  }
+
+  h4 {
+    font-size: 24px;
+  }
+
+  h5 {
+    font-size: 20px;
+  }
+}

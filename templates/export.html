@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Export PDF</title>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1><center>Date aplicație de credite</center></h1>
+        <h3><center>Credite</center></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nume</th>
+                    <th>Clasă</th>
+                    <th>Număr de credite</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for elev in users %}
+                <tr>
+                    <td>{{ elev.nume }}</td>
+                    <td>{{ elev.clasa }}</td>
+                    <td>{{ elev.total_credits }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

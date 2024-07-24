@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ project.nume }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navbar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-icons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icon.png') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='project_page.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container ">
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="home()">Home</a>
+                    </li>
+                    {% if user.elev==True: %}
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="proiecte()">Proiecte</a>
+                    </li>
+                    {%endif%}
+                    {% if user.elev==False%}
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="create()">Create</a>
+                    </li>
+                    {%endif%}
+                    {% if user.admin==True%}
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="admin()">Consolă Admin</a>
+                    </li>
+                    {%endif%}
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="">Program</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="profil()">Profilul meu</a>
+                    </li>
+                </ul>
+            <div>
+        </div>
+      </nav>
+    <p><b>Nume Proiect: </b> {{ project.nume }}</p>
+    <p><b>Creat de: </b> {{ nume_creator }}</p>
+    <h2>Elevi:</h2>
+    <div id="users-list">
+        {% for user_info in user_data %}
+            <div class="user">
+                <p><b>Nume: </b> {{ user_info['nume'] }}</p>
+                <p><b>Credite: </b> {{ user_info['credits'] }}</p>
+                {% if user_is_creator %}
+                    <form action="/kick_user" method="post">
+                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                        <input type="hidden" name="user_id" value="{{ user_info['id'] }}">
+                        <button type="submit">Elimină elev</button>
+                    </form>
+                    <form action="/modify_credits" method="post">
+                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                        <input type="hidden" name="user_id" value="{{ user_info['id'] }}">
+                        <input type="number" name="credits" value="{{ user_info['credits'] }}" min="0">
+                        <button type="submit">Modifică numărul de credite</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+<script>
+    function leaderboard() {
+      window.location.href = "/leaderboard";
+    }
+    function profil(x)
+    {
+      window.location.href="profil/{{user.adresa}}"
+    }
+    function home()
+    {
+      window.location.href="/home"
+    }
+    function proiecte()
+    {
+      window.location.href="/proiecte"
+    }
+    function create()
+    {
+    window.location.href="/create"
+    }
+    function admin()
+  {
+    window.location.href="/admin"
+  }
+    </script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='click-scroll.js') }}"></script>
+    <script src="{{ url_for('static', filename='custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
