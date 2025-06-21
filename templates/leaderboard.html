@@ -45,7 +45,7 @@
                     <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="">Program</a>
+                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="program()">Program</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link click-scroll" href="javascript:void(0)" onclick="profil()">Profilul meu</a>
@@ -55,33 +55,51 @@
     </div>
   </nav>
   <br>
-  <h1>Leaderboard</h1>
+  {% if user_curent.video == True: %}
+  <video id="background-video" autoplay loop muted>
+    <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
+  </video>
+  {% endif%}
+  <div class="cutie">
+  <h1 style="margin-top:20px;">Leaderboard</h1>
   <div class="top-leaders">
     {% for user in users[:3] %}
       {% if users.index(user)==0: %}
       <div onclick="window.location.href = '/profil/{{user.adresa}}'" style="background-color:  #FFD700!important;" class="leader">
-        <img class ="imgProfile"src="{{ user.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+        {% if user.profile_image %}
+            <img class="imgProfile"  src="{{ url_for('serve_image', filename=user.profile_image) }}">
+            {% else %}
+            <img class="imgProfile"  src="https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg">
+        {% endif %}
         <div class="info">
-          <p>{{ user.nume }}</p>
-          <p>Credite: {{ user.total_credits }}</p>
+          <p {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>{{ user.nume }}</p>
+          <p {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>Credite: {{ user.total_credits }}</p>
         </div>
       </div>
       {% endif %}
       {% if users.index(user)==1: %}
       <div onclick="window.location.href = '/profil/{{user.adresa}}'" style="margin-top: 100px!important; background-color:   #d7d7d7!important;"class="leader">
-        <img class ="imgProfile"src="{{ user.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+        {% if user.profile_image %}
+            <img class="imgProfile"  src="{{ url_for('serve_image', filename=user.profile_image) }}">
+            {% else %}
+            <img class="imgProfile"  src="https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg">
+        {% endif %}
         <div class="info">
-          <p>{{ user.nume }}</p>
-          <p>Credite: {{ user.total_credits }}</p>
+          <p {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>{{ user.nume }}</p>
+          <p {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>Credite: {{ user.total_credits }}</p>
         </div>
       </div>
       {% endif %}
       {% if users.index(user)==2: %}
       <div onclick="window.location.href = '/profil/{{user.adresa}}'"  style="margin-top: 200px!important; background-color: #ad8a56!important;" class="leader">
-        <img  class ="imgProfile"src="{{ user.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+        {% if user.profile_image %}
+            <img class="imgProfile"  src="{{ url_for('serve_image', filename=user.profile_image) }}">
+            {% else %}
+            <img class="imgProfile"  src="https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg">
+        {% endif %}
         <div class="info">
-          <p>{{ user.nume }}</p>
-          <p>Credite: {{ user.total_credits }}</p>
+          <p {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>{{ user.nume }}</p>
+          <p {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>Credite: {{ user.total_credits }}</p>
         </div>
       </div>
       {% endif %}
@@ -90,16 +108,20 @@
   <br>
   <ul class="players-list">
     <li>
+      <span>Poziție</span>
       <span>Nume</span>
       <span>Credite</span>
     </li>
     {% for user in users[3:] %}
+    <div onclick="window.location.href = '/profil/{{user.adresa}}'">
       <li>
-        <span>{{ user.nume }}</span>
-        <span>{{ user.total_credits }}</span>
+        <span {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>{{ users.index(user) + 1 }}.</span><span {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>{{ user.nume }}</span>
+        <span {% if user==user_curent: %}style="color:#005a9f;font-weight:900;"{% endif %}>{{ user.total_credits }}</span>
       </li>
+     </div>
     {% endfor %}
   </ul>
+  </div>
 </body>
 </html>
 <script>
@@ -126,6 +148,10 @@
     {
     window.location.href="/admin"
     }
+    function program()
+  {
+    window.location.href="/program"
+  }
     </script>
     <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='click-scroll.js') }}"></script>

@@ -1,7 +1,81 @@
-#users-list
+.user
 {
-    width:50vw;
+    /*width:50vw;
     display:grid;
     grid-template-columns: repeat(3, 200px);
-    column-gap: 50px;
+    column-gap: 50px;*/
+    display: flex;
+    justify-content:center;
+    flex-wrap: wrap;
+    width:95%;
+}
+.flex-item {
+  flex: 1 0 auto;
+  flex-basis: 100px;
+}
+
+.cutie
+  {
+    /*position:absolute;
+    top:16%;
+    left:17.5%;*/
+    border: 2px solid rgb(9, 56, 243);
+    border-radius: 20px;
+    width:65%;
+    height:auto;
+    margin:auto;
+    margin-top:5%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 2px 2px rgba(0,0,0,0.12), 0 4px 4px rgba(0,0,0,0.12), 0 8px 8px rgba(0,0,0,0.12), 0 16px 16px rgba(0,0,0,0.12);
+    background: rgba(255,255,255,0.9);
+    font-size: 1vw;
+  }
+ #background-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+input,input[type="file"],submit,button{
+  border-radius: 10px;
+  border: 1px solid;
+  vertical-align: top;
+}
+.check
+{
+    width:55px;
+}
+
+.players-list
+{
+	list-style: none;
+	padding: 0;
+	margin: 20px auto;
+}
+
+.players-list li
+{
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+@media(max-width:1199px)
+{
+    .check
+    {
+        width:35px;
+    }
+}
+@media(max-width:1399px)
+{
+    .check
+    {
+        width:40px;
+    }
 }

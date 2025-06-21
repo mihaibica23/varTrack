@@ -11,7 +11,7 @@
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icon.png') }}">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
     </head>
     <body>
       <nav class="navbar navbar-expand-lg ">
@@ -43,7 +43,7 @@
                         <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="">Program</a>
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="program()">Program</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link click-scroll" href="javascript:void(0)" onclick="profil()">Profilul meu</a>
@@ -52,82 +52,94 @@
             <div>
         </div>
       </nav>
-        <div class="top-leaders "> 
-        {% if is_first == False and is_last==False: %}
-          {% for elev in user_list: %}
-            <div onclick="window.location.href = '/profil/{{elev.adresa}}'" class="leader">
-              <img align="center" class ="imgProfile"src="{{ elev.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
-              <div class="info">
-                <p class="pSus">{{ elev.nume }}</p>
-                <p class="pJos">Credite: {{ elev.total_credits }}</p>
-              </div>
-          </div>
-          {% endfor %}
-        {% endif %}
-        {% if is_first == True: %}
-        <div class="leader">
-          <img align="center" class ="imgProfile"src="{{ url_for('static', filename='Premiu.jpg') }}">
-          <div class="info">
-            <p class="pSus">Felicitări!</p>
-            <p class="pJos">Ești numărul #1!</p>
-          </div>
-        </div>
-          {% for elev in user_list: %}
-            <div onclick="window.location.href = '/profil/{{elev.adresa}}'" class="leader">
-              <img align="center" class ="imgProfile"src="{{ elev.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
-              <div class="info">
-                <p class="pSus">{{ elev.nume }}</p>
-                <p class="pJos">Credite: {{ elev.total_credits }}</p>
-              </div>
-            </div>
-          {% endfor %}
-        {% endif %}
-      </div>
+    {%if user.elev==True:%}
       <div class="top-leaders">
-        {% if is_last == True: %}
-          {% for elev in user_list[:-1]: %}
-            <div onclick="window.location.href = '/profil/{{elev.adresa}}'" class="leader">
-              <img align="center" class ="imgProfile"src="{{ elev.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+
+          <div {%if users[0]!=user:%} onclick="window.location.href = '/profil/{{elev_random.adresa}}'"{%endif%} class="leader">
+             {% if users[0]!=user:%}
+             {% if elev_random.profile_image: %}
+            <img class="imgProfile"  src="{{ url_for('serve_image', filename=elev_random.profile_image) }}">
+            {% else %}
+            <img class="imgProfile"  src="https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg">
+            {% endif %}
+            {%endif%}
+            {% if users[0]!=user:%}
               <div class="info">
-                <p class="pSus">{{ elev.nume }}</p>
-                <p class="pJos">Credite: {{ elev.total_credits }}</p>
+                <p class="pSus">WOW!</p>
+		<p class="pJos">{{ elev_random.nume  }} are {{ elev_random.total_credits }} {% if elev_random.total_credits!=0:%}de{%endif%} credite!</p>
               </div>
-            </div>
-          {% endfor %}
-          <div class="leader">
-            <img align="center" class ="imgProfile"src="https://em-content.zobj.net/source/microsoft/379/crying-face_1f622.png">
-            <div class="info">
-              <p class="pSus">Ești pe</p>
-              <p class="pJos">ultimul loc</p>
-            </div>
+            {% else %}
+              <img align="center" class ="imgProfile"src="{{ url_for('static', filename='Premiu.png') }}">
+                 <div class="info">
+                    <p class="pSus">Felicitări!</p>
+                    <p class="pJos">Ești numărul #1!</p>
+                 </div>
+            {% endif %}
           </div>
-          {% for elev in user_list[1:]: %}
-            <div onclick="window.location.href = '/profil/{{elev.adresa}}'" class="leader">
-              <img align="center" class ="imgProfile"src="{{ elev.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
+          <div class="leader">
+             {% if users[-1]==user:%}
+                <img align="center" class ="imgProfile"src="{{ url_for('static', filename='muscle.png') }}">
+                <div class="info">
+                    <p class="pSus">Muncește pentru</p>
+                    <p class="pJos">a acumula credite!</p>
+                </div>
+             {% endif %}
+
+             {% if users.index(user)==0: %}
+                <img align="center" class ="imgProfile"src="{{ url_for('static', filename='muscle.png') }}">
+                 <div class="info">
+                    <p class="pSus">Muncește în continuare pentru</p>
+                    <p class="pJos">a-ți păstra locul!</p>
+                 </div>
+             {%endif%}
+
+             {% if users.index(user)!=0 and users[-1]!=user: %}
+                <img align="center" class ="imgProfile"src="{{ url_for('static', filename='arrow.jpg') }}">
+                <div class="info">
+                    <p class="pSus">Felicitări! Ești pe locul #{{users.index(user)+1}}!</p>
+                    <p class="pJos">Continuă tot așa și vei fi #1!</p>
+                </div>
+             {% endif %}
+
+          </div>
+          <div onclick="window.location.href = '/profil/{{user.adresa}}'" class="leader">
+              {% if user.profile_image: %}
+            <img class="imgProfile"  src="{{ url_for('serve_image', filename=user.profile_image) }}">
+            {% else %}
+            <img class="imgProfile"  src="https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg">
+            {% endif %}
               <div class="info">
-                <p class="pSus">{{ elev.nume }}</p>
-                <p class="pJos">Credite: {{ elev.total_credits }}</p>
+                <p class="pSus">{{ user.nume }}</p>
+                <p class="pJos">Credite: {{ user.total_credits }}</p>
               </div>
-            </div>
-          {% endfor %}
-        {% endif %}
+          </div>
+
+
         </div>
-      </div>
+        {%else%}
+        <div class="top-leaders"></div>
+        {%endif%}
+      {% if user.video==True:%}
       <video id="background-video" autoplay loop muted>
         <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
       </video>
+      {% endif%}
       <div class="cutie" align="center">
         {% for proiect in proiecte_ins:%}
         <!--<div onclick="window.location.href = '/proiect/{{proiect.adresaP}}'" class = "proiect">-->
-        <div onclick="window.location.href='/proiect/{{proiect.adresaP}}'" class = "proiect">
+	<div onclick="window.location.href='/proiect/{{proiect.adresaP}}'" class = "proiect" {% if proiect.avansat == False:%} style="background-color:#e1611e!important"{%endif%}>
+            {% if proiect.imgProiect:%}
+          <img class="imgProiect" src="{{ url_for('serve_image', filename=proiect.imgProiect) }}">
+            {% else %}
           <img class="imgProiect" src="https://images.pond5.com/children-walking-school-cute-colorful-illustration-136160623_iconl_wide_nowm.jpeg">
-          <h3><center>{{ proiect.nume }}</center></h3>
-          <h4 align="center">{{ User.query.get(proiect.creator_id).nume }}</h4>
+            {% endif %}
+          <h4><center>{{ proiect.nume }}</center></h4>
           {% if user.elev == True: %}
+	  <h5 align="center">{{ User.query.get(proiect.creator_id).nume }}</h5>
           <h5 align="center">Credite: {% for association in db.session.query(user_project_association).filter_by(user_id=user.id, project_id=proiect.id) %}{{ association.credits }}  {% endfor %}</h5>
           {% endif %}
           {% if user.elev == False: %}
-          <h5 align="center">Clasa: {{proiect.clasa}}</h5>
+	  <h5 align="center">{% if proiect.clasa|length <4: %}Clasă: {% else %} Clase: {% endif %}{% if proiect.clasa|length==29: %}TOATE{% else %}{{proiect.clasa}}{% endif %}</h5>
           {% endif %}
         </div>
         {% endfor %}
@@ -167,9 +179,17 @@
   {
     window.location.href="/admin"
   }
+  function program()
+  {
+    window.location.href="/program"
+  }
   </script>
+  <script>
+  //window.onload = function() {
+    //alert("Versiunea 1.2 a aplicației a fost lansată. Vizitează pagina http://www.vartrack.ro/update pentru a afla mai multe.");
+  //};
+</script>
   <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
   <script src="{{ url_for('static', filename='click-scroll.js') }}"></script>
   <script src="{{ url_for('static', filename='custom.js') }}"></script>
-  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>

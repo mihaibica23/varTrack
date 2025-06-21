@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{project.nume}} - Prezență</title>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1><center>Fișă prezență</center></h1>
+        <h3><center>Opțional: {{project.nume}}</center></h3>
+        <table style="margin-left:auto; margin-right:auto">
+            <thead>
+                <tr>
+                    <th>Nume</th>
+                    {% for i in range(1, project.nr_prezente +1)%}
+                    <th>P{{i}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for elev in user_data: %}
+                <tr>
+                    <td>{{ elev['nume'] }}</td>
+                    {% for prezenta in elev['prezente']%}
+                    {% if prezenta.prezent==True%}
+                    <td style="color:green;">✔</td>
+                    {% else %}
+                    <td style="color:red;">✖</td>
+                    {%endif%}
+                    {%endfor%}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

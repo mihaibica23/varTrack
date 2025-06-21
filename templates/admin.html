@@ -42,7 +42,7 @@
                     <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="">Program</a>
+                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="program()">Program</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link click-scroll" href="javascript:void(0)" onclick="profil()">Profilul meu</a>
@@ -57,6 +57,8 @@
         <p>Nu știu cum ai ajuns aici, dar acestă pagină este doar pentru admin</p>
         {% endif %}
         {% if user.admin==True: %}
+        <button class="btnR" onclick="register()">Înregistrează conturi</button><br><br>
+	<button class="btnR" onclick="tech()">Tech Support</button><br><br>
         <form action="/exportDate" method="POST">
           <input type="submit" value="Descarcă PDF">
         </form><br>
@@ -75,12 +77,14 @@
         <p style="color:green">!Siguranța este pornită, învârte cheia pentru a o opri!</p>
         {%endif%}
         {%endif%}
-        
+
       </div>
     </div>
+    {% if user.video==True: %}
     <video id="background-video" autoplay loop muted>
       <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
     </video>
+    {% endif %}
 </body>
 </html>
 <script>
@@ -106,6 +110,18 @@
   function admin()
   {
     window.location.href="/admin"
+  }
+  function program()
+  {
+    window.location.href="/program"
+  }
+  function register()
+  {
+    window.location.href="/register"
+  }
+  function tech()
+  {
+    window.location.href="/tech"
   }
   </script>
   <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>

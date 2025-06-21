@@ -43,7 +43,7 @@
                         <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="">Program</a>
+                        <a class="nav-link click-scroll" href="javascript:void(0)" onclick="program()">Program</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link click-scroll" href="javascript:void(0)" onclick="profil()">Profilul meu</a>
@@ -52,30 +52,200 @@
             <div>
         </div>
       </nav>
+      {% if user.video==True:%}
+      <video id="background-video" autoplay loop muted>
+        <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
+      </video>
+      {% endif %}
+    <div class="cutie">
+    <div align="center">
+    <br>
+    {% if user_is_creator: %}
+    <p><b>Modifică proiectul</b></p>
+    <form action="/modProj" method="post">
+	    <input type="hidden" name="project_id" value="{{project.id}}">
+	    Nume: <input type="text" name="num_proj" placeholder="{{project.nume}}">
+	    <input type="checkbox" name="clasa" value="9A" {% if "9A" in project.clasa: %} checked {% endif %}>9A
+            <input type="checkbox" name="clasa" value="9B" {% if "9B" in project.clasa: %} checked {% endif %}>9B
+            <input type="checkbox" name="clasa" value="10A" {% if "10A" in project.clasa: %} checked {% endif %}>10A
+            <input type="checkbox" name="clasa" value="10B" {% if "10B" in project.clasa: %} checked {% endif %}>10B
+            <input type="checkbox" name="clasa" value="11A" {% if "11A" in project.clasa: %} checked {% endif %}>11A
+            <input type="checkbox" name="clasa" value="11B" {% if "11B" in project.clasa: %} checked {% endif %}>11B
+            <input type="checkbox" name="clasa" value="12A" {% if "12A" in project.clasa: %} checked {% endif %}>12A
+            <input type="checkbox" name="clasa" value="12B" {% if "12B" in project.clasa: %} checked {% endif %}>12B
+	    <button type="submit">Modifică</button> 
+    </form>
+    {% else %}
     <p><b>Nume Proiect: </b> {{ project.nume }}</p>
     <p><b>Creat de: </b> {{ nume_creator }}</p>
-    <h2>Elevi:</h2>
-    <div id="users-list">
+    {% endif%}
+    <br>
+    <h2 style="border:2px solid">Elevi</h2>
+    <br>
+    <div class="users-list">
         {% for user_info in user_data %}
-            <div class="user">
-                <p><b>Nume: </b> {{ user_info['nume'] }}</p>
-                <p><b>Credite: </b> {{ user_info['credits'] }}</p>
+            <div class="user" align="center">
+            {%if user.elev==False:%}
+
+
+                <p class="flex-item" align="left" style="margin-right:10px;"><b>Nume: </b> {{ user_info['nume'] }}</p>
+                <p class="flex-item" align="left" style="margin-right:10px;"><b>Credite: </b> {{ user_info['credits'] }}</p>
                 {% if user_is_creator %}
-                    <form action="/kick_user" method="post">
+                    {% if project.avansat==False:%}
+                    <form action="/modify_credits" method="post" style="margin-right:10px;">
+                        <input  type="hidden" name="project_id" value="{{ project.id }}">
+                        <input type="hidden" name="user_id" value="{{ user_info['id'] }}">
+                        <label>1: </label>
+                        <input class="flex-item check" type="number" name="credit1" value="{{ Credite.query.filter_by(user_id=user_info['id'],project_id=project.id).first().credit1 }}" min="0">
+                        <label>2: </label>
+                        <input class="flex-item check" type="number" name="credit2" value="{{ Credite.query.filter_by(user_id=user_info['id'],project_id=project.id).first().credit2 }}" min="0">
+                        <label>3: </label>
+                        <input class="flex-item check" type="number" name="credit3" value="{{ Credite.query.filter_by(user_id=user_info['id'],project_id=project.id).first().credit3 }}" min="0">
+                        <label>4: </label>
+                        <input class="flex-item check" type="number" name="credit4" value="{{ Credite.query.filter_by(user_id=user_info['id'],project_id=project.id).first().credit4 }}" min="0">
+                        <label>5: </label>
+                        <input class="flex-item check" type="number" name="credit5" value="{{ Credite.query.filter_by(user_id=user_info['id'],project_id=project.id).first().credit5 }}" min="0">
+                        <button class="flex-item" type="submit">Modifică</button>
+                    </form>
+                    {% else %}
+                    <form action="/modify_credits" method="post" style="margin-right:10px;">
+                        <input  type="hidden" name="project_id" value="{{ project.id }}">
+                        <input type="hidden" name="user_id" value="{{ user_info['id'] }}">
+                        <label>P1: </label>
+                        <input style="width:55px;"class="flex-item" type="number" name="credit1" value="{{ Credite.query.filter_by(user_id=user_info['id'],project_id=project.id).first().credit1 }}" min="0">
+                        <label>P2: </label>
+                        <input style="width:55px;"class="flex-item" type="number" name="credit2" value="{{ Credite.query.filter_by(user_id=user_info['id'],project_id=project.id).first().credit2 }}" min="0">
+                        <label>P3: </label>
+                        <input style="width:55px;"class="flex-item" type="number" name="credit3" value="{{ Credite.query.filter_by(user_id=user_info['id'],project_id=project.id).first().credit3 }}" min="0">
+                        <button class="flex-item" type="submit">Modifică credite</button>
+                    </form>
+                    {% endif%}
+                    <form onsubmit="return confirmare()" action="/kick_user" method="post" style="margin-right:10px;">
                         <input type="hidden" name="project_id" value="{{ project.id }}">
                         <input type="hidden" name="user_id" value="{{ user_info['id'] }}">
-                        <button type="submit">Elimină elev</button>
+                        <button class="flex-item" style="background-color:#c40613; color:white;" type="submit">X</button>
                     </form>
-                    <form action="/modify_credits" method="post">
-                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                    {% if project.avansat==False:%}
+                    <div>
+                        <form method="POST">
                         <input type="hidden" name="user_id" value="{{ user_info['id'] }}">
-                        <input type="number" name="credits" value="{{ user_info['credits'] }}" min="0">
-                        <button type="submit">Modifică numărul de credite</button>
-                    </form>
+                        {%for prezente in user_info['prezente']%}
+                        <input class="flex-item" style="align-self:flex-start; vertical-align:baseline!important;"type="checkbox" name="{{prezente.count}}" {% if prezente.prezent %}checked{% endif %}>
+                        {%endfor%}
+                        <button type="submit">Salvează</button>
+                        </form>
+                    </div>
+                    {%endif%}
                 {% endif %}
+
+            {% else  %}
+            <p class="flex-item" align="right" style="margin-right:10px;"><b>Nume:</b></p>
+            <p class="flex-item" align="left" style="margin-right:10px;">{{ user_info['nume'] }}</p>
+            <p class="flex-item" align="right" style="margin-right:10px;"><b>Credite:</b></p>
+            <p class="flex-item" align="left" style="margin-right:10px;">{{ user_info['credits'] }}</p>
+
+            {%endif%}
             </div>
         {% endfor %}
+        <br>
+        {%if user_is_creator and project.avansat==True:%}
+        <div class="user" align="center">
+        <form action="/actualizarImagineProiect" method="post" style="margin-right:10px;"enctype="multipart/form-data">
+                        <input class="flex-item" type="file" name="pic-upload" id="pic-upload" accept="image/*">
+                        <input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+                        <button class="flex-item" type="submit">Schimbă imaginea</button>
+
+        </form>
+        <form action="/finalDeAnProiect" method="post" style="margin-right:10px;">
+                        <input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+                        <button class="flex-item" type="submit">Final de an</button>
+        <!--</div>-->
+        </form>
+	<form method="post" style="margin-right:10px" action="/dezIns">
+		<input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+		{% if project.inscriere == True: %}
+		<button class="flex-item" style="background-color:#b0050e!important; color:white!important;"type="submit">Oprește înscrierile</button>
+		{% else %}
+		<button class="flex-item" style="background-color:#149127!important; color:white!important;" type="submit">Activează înscrierile</button>
+		{% endif %}
+	</form>
+	<form method="post" action="/adauga">
+			    <input type="hidden" name="project_id" value="{{project.id}}">
+			    <input style ="color:white; background-color:#005a9f;" type="submit" {% if project.adauga==True: %} value="Închide fereastra" {% else %} value="Adaugă elevi"{% endif %}>
+		    </form>
+
+        </div>
+        {% endif%}
+        {% if user_is_creator and project.avansat==False: %}
+        <div class="user" align="center">
+                <form action="/actualizarImagineProiect" method="post" style="margin-right:10px;"enctype="multipart/form-data">
+                        <input class="flex-item" type="file" name="pic-upload" id="pic-upload" accept="image/*">
+                        <input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+                        <button class="flex-item" type="submit">Schimbă imaginea</button>
+                </form>
+
+                    <form action="/nrPrezenteAct" method="post" style="margin-right:10px;">
+                        <input class="flex-item" type="number" name="prezente" value="{{ project.nr_prezente }}" min="0">
+                        <input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+                        <button class="flex-item" type="submit">Schimbă nr. prezențe</button>
+                    </form>
+                    <form action="/exportPrezenta" method="post" style="margin-right:10px;">
+                        <input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+                        <button class="flex-item" type="submit">Exportă Prezențe</button>
+                    </form>
+                    <form action="/finalDeAnProiect" method="post" style="margin-right:10px;">
+                        <input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+                        <button class="flex-item" type="submit">Final de an</button>
+                    </form>
+                    <form action="/resetPrezente" method="post" style="margin-right:10px;">
+                        <input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+                        <button class="flex-item" type="submit">Reset Prezențe</button>
+                    </form>
+		    <form method="post" style="margin-right:10px" action="/dezIns">
+			<input class="flex-item" type="hidden" name="project_id" value="{{ project.id }}">
+			{% if project.inscriere == True: %}
+			<button class="flex-item" style="background-color:#b0050e!important; color:white!important;"type="submit">Oprește înscrierile</button>
+			{% else %}
+			<button class="flex-item" style="background-color:#149127!important; color:white!important;" type="submit">Activează înscrierile</button>
+			{% endif %}
+		    </form>
+		    <form method="post" action="/adauga">
+			    <input type="hidden" name="project_id" value="{{project.id}}">
+			    <input style ="color:white; background-color:#005a9f;" type="submit" {% if project.adauga==True: %} value="Închide fereastra" {% else %} value="Adaugă elevi"{% endif %}>
+		    </form>
+
+
+        </div>
+        {% endif %}
     </div>
+    </div>
+    <br>
+    </div>
+    {% if project.adauga==True and user_is_creator:%}
+    <div style="margin-top:1%!important;"class="cutie">
+	    <h1 style="margin-top:1%;"align="center">Adaugă elevi</h1>
+	    <div class="players-list">
+		    <li>
+			    <span align="left">Clasă</span>
+			    <span align="center">Nume</span>
+			    <span align="right">Adaugă</span>
+		    </li>
+	    {% for elev in useri_available%}
+	            <li>
+			    <span align="left">{{elev.clasa}}</span>
+			    <span align="center">{{elev.nume}}</span>
+		            <span align="right">
+				    <form method="post" action="/addElev">
+					    <input type="hidden" name="user_id" value="{{elev.id}}">
+					    <input type="hidden" name="project_id" value="{{project.id}}">
+					    <input style="background-color:#005a9f; color:white;" type="submit" value="Adaugă">
+				    </form>
+			    </span>
+		    </li>
+	    {%endfor%}
+	    </div>
+    </div>
+    {%endif%}
 </body>
 </html>
 <script>
@@ -84,7 +254,7 @@
     }
     function profil(x)
     {
-      window.location.href="profil/{{user.adresa}}"
+      window.location.href="/profil/{{user.adresa}}"
     }
     function home()
     {
@@ -102,6 +272,17 @@
   {
     window.location.href="/admin"
   }
+  function program()
+  {
+    window.location.href="/program"
+  }
+  function confirmare() {
+  if (confirm("Sigur vrei să elimini elevul?")) {
+    return true;
+  } else {
+    return false;
+  }
+}
     </script>
     <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='click-scroll.js') }}"></script>

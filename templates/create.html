@@ -2,14 +2,63 @@
 <html>
 <head>
   <title>Create</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navbar.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='create.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-icons.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icon.png') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="">
-
-    <form action="/create" method="POST">
-      <h1>Creaza un proiect</h1><br><br>
+    <nav class="navbar navbar-expand-lg ">
+    <div class="container ">
+        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav ms-auto ">
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="home()">Home</a>
+                </li>
+                {% if user.elev==True: %}
+                  <li class="nav-item">
+                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="proiecte()">Proiecte</a>
+                  </li>
+                {%endif%}
+                {% if user.elev==False%}
+                  <li class="nav-item">
+                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="create()">Create</a>
+                  </li>
+                {%endif%}
+                {% if user.admin==True%}
+                    <li class="nav-item">
+                      <a class="nav-link click-scroll" href="javascript:void(0)" onclick="admin()">Consolă Admin</a>
+                    </li>
+                {%endif%}
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="program()">Program</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link click-scroll" href="javascript:void(0)" onclick="profil()">Profilul meu</a>
+                </li>
+            </ul>
+        <div>
+    </div>
+  </nav>
+  {% if user.video==True: %}
+  <video id="background-video" autoplay loop muted>
+    <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
+  </video>{% endif %}
+  <div class="cutie">
+    <form align="center"action="/create" method="POST">
+      <h1 style="margin-top:1.5%;">Creează un proiect</h1><br><br>
       <input type="text" name="nume" placeholder="Nume" required><br><br>
-      <input type="text" name="linkImagine" placeholder="Link Imagine" required><br><br>
       <input type="checkbox" name="clasa" value="9A"> 9A<br>
       <input type="checkbox" name="clasa" value="9B"> 9B<br>
       <input type="checkbox" name="clasa" value="10A"> 10A<br>
@@ -18,9 +67,47 @@
       <input type="checkbox" name="clasa" value="11B"> 11B<br>
       <input type="checkbox" name="clasa" value="12A"> 12A<br>
       <input type="checkbox" name="clasa" value="12B"> 12B<br>
-      <br><input type="checkbox" name="avansat" value="avansat"> Avansat(Alege avansat, optionaleel modulare nu sunt încă implementate)
-      <br><input type="checkbox" name="avansat" value="opt"> Optional Modular<br><br>
-      <input type="submit" value="Crează proiect">
+      <br><input type="checkbox" name="avansat" value="avansat"> Avansat
+      <br><input type="checkbox" name="avansat" value="opt"> Opțional Modular<br><br>
+      <input style="margin-bottom:3%;" type="submit" value="Creează proiect">
     </form>
+   </div>
 </body>
+<script>
+  function leaderboard() {
+    window.location.href = "/leaderboard";
+  }
+  function profil(x)
+  {
+    window.location.href="profil/{{user.adresa}}"
+  }
+  function home()
+  {
+    window.location.href="/home"
+  }
+  function proiecte()
+  {
+    window.location.href="/proiecte"
+  }
+  function confirmare() {
+  if (confirm("Sigur vrei să te înscri în acest proiect? Dacă intri nu vei mai putea ieși.")) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function admin()
+    {
+    window.location.href="/admin"
+    }
+    function program()
+  {
+    window.location.href="/program"
+  }
+  </script>
+  <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='click-scroll.js') }}"></script>
+  <script src="{{ url_for('static', filename='custom.js') }}"></script>
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
 </html>

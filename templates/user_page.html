@@ -42,7 +42,7 @@
                     <a class="nav-link click-scroll" href="javascript:void(0)" onclick="leaderboard()">Leaderboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="">Program</a>
+                    <a class="nav-link click-scroll" href="javascript:void(0)" onclick="program()">Program</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link click-scroll" href="javascript:void(0)" onclick="profil()">Profilul meu</a>
@@ -52,30 +52,64 @@
     </div>
   </nav>
     <div class="cutie">
-      <img class="imagine" align="right" src="{{ user_pagina.linkImagineU or 'https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg'}}">
-      <div class="info">
+      {% if user_pagina.profile_image %}
+        <img class="imagine" align="right" src="{{ url_for('serve_image', filename=user_pagina.profile_image) }}">
+      {% else %}
+        <img class="imagine" align="right" src="https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg">
+      {% endif %}
+      <div class="info" style="width:96%!important;">
         {% if user_pagina.elev==True: %}
         <p>Nume: {{user_pagina.nume}}</p>
         <p>Clasa: {{user_pagina.clasa}}</p>
         <p>Email: {{user_pagina.email}}</p>
         <p>Credite: {{credite}}</p>
+     
+        {%if user_pagina.elev==True and user!=user_pagina:%}<p>Proiecte: </p>{%endif%}
         {% endif %}
         {% if user_pagina==user: %}
-        <form action="/actualizarImagine" method="POST">
-          <input style="margin-bottom: 0;" type="text" name="AdresaImg" placeholder="Adresă Imagine Profil"><br><br>
-          <input type="submit" value="Schimbă Imaginea">
+        <form action="/actualizarImagine" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image-upload" id="image-upload" accept="image/*"><br><br>
+            <input type="submit" value="Schimbă Imaginea">
         </form>
         <br>
         <form action="/actualizarParola" method="POST">
           <input style="margin-bottom: 0;" type="text" name="ParolaN" placeholder="Parolă nouă"><br><br>
           <input type="submit" value="Schimbă Parola">
-        </form>
-        {%endif%}
-      </div>
+        </form><br>
+	<form method="POST">
+                <input type="hidden" name="action" value="video">
+                <input type="submit" {% if user.video == True: %} style="background-color:#b0050e!important; color:white!important" value="Oprește video" {% else %} style="background-color:#149127!important; color:white!important" value="Pornește video" {% endif %} >
+	</form><br>
+        <form method="POST">
+	  <input type="hidden" name="action" value="log">
+          <input type="submit" value="Log out">
+	</form><br>
     </div>
+      {%endif%}
+      {%if user_pagina.elev==True and user!=user_pagina:%}
+        <div class="cutieButCooler">
+            {% for proiect in user_pagina.projects:%}
+                {% if proiect.vizibil==True: %}
+		<div onclick="window.location.href='/proiect/{{proiect.adresaP}}'"{% if proiect.avansat == False:%}style="background-color:#e1611e!important"{%endif%} class = "proiect">
+                    {% if proiect.imgProiect:%}
+                        <img class="imgProiect" src="{{ url_for('serve_image', filename=proiect.imgProiect) }}">
+                    {% else %}
+                        <img class="imgProiect" src="https://images.pond5.com/children-walking-school-cute-colorful-illustration-136160623_iconl_wide_nowm.jpeg">
+                    {% endif %}
+                    <h3><center>{{ proiect.nume }}</center></h3>
+                    <h4 align="center">{{ User.query.get(proiect.creator_id).nume }}</h4>
+                    <h5 align="center">Credite: {% for association in db.session.query(user_project_association).filter_by(user_id=user_pagina.id, project_id=proiect.id) %}{{ association.credits }}  {% endfor %}</h5>
+                </div>
+                {%endif%}
+            {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    {% if user.video==True:%}
     <video id="background-video" autoplay loop muted>
       <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
     </video>
+    {% endif %}
 </body>
 </html>
 <script>
@@ -102,9 +136,12 @@
   {
     window.location.href="/admin"
   }
+  function program()
+  {
+    window.location.href="/program"
+  }
   </script>
   <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
   <script src="{{ url_for('static', filename='click-scroll.js') }}"></script>
   <script src="{{ url_for('static', filename='custom.js') }}"></script>
-  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>

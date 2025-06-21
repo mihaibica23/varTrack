@@ -14,14 +14,14 @@
   h1, h2 {
     text-align: center!important;
   }
-  
+
   .top-leaders {
     display: flex!important;
     flex-wrap: wrap!important; /* Allow items to wrap on smaller screens */
     justify-content: space-around!important; /* Distribute evenly with some space */
     margin: 20px auto!important;
   }
-  
+
   .leader {
     box-shadow: rgba(0,86,248, 0.4) -5px 5px, rgba(0,82,242, 0.3) -10px 10px, rgba(0,63,225, 0.2) -15px 15px, rgba(0,45,207, 0.1) -20px 20px, rgba(0,40,198, 0.05) -25px 25px;
     text-align: center!important;
@@ -29,9 +29,9 @@
     border-radius: 5px!important;
     width: 30%!important;
     background: rgba(255,255,255,0.9);
-    
+
   }
-  
+
   .leader img.imgProfile {
     margin-top: 3%;
     width: 30%!important;
@@ -39,7 +39,7 @@
     border-radius: 50%!important;
     justify-content: center!important;
     margin-right: 2%!important;
-    
+
   }
   .leader .info {
     margin-top: 3%;
@@ -47,29 +47,29 @@
     font-size: 2vw!important;
     margin-left: 0;
   }
-  
+
   .players-list {
     list-style: none!important;
     padding: 0!important;
     margin: 20px auto!important;
   }
-  
+
   .players-list li {
     display: flex!important;
     justify-content: space-between!important;
     padding: 10px!important;
     border-bottom: 1px solid #ddd!important;
   }
-  
+
   /* Flex order for desktop (optional) */
   .leader:nth-child(1) {
     order: 2!important;
   }
-  
+
   .leader:nth-child(2) {
     order: 0!important;
   }
-  
+
   /* Mobile order using flex-direction (optional) */
 
   body{
@@ -114,19 +114,29 @@
 .imgProiect
 {
   width:100%;
-  height:55%;
-  
+  height:auto;
+  aspect-ratio:3.23/1.7;
+
+
 }
 
 /*Cutie*/
-@media (max-width: 599px) {
+@media (max-width: 606px) {
   .cutie {
     grid-template-columns: repeat(2, 1fr);
+    .proiect
+    {
+        height:400px!important;
+    }
   }
 }
-@media (min-width: 600px) {
+@media (max-width: 1199px) {
   .cutie {
     grid-template-columns: repeat(2, 1fr);
+    .proiect
+    {
+        height:300px;
+    }
   }
 }
 
@@ -135,7 +145,7 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (min-width: 1600px) {
+@media (min-width: 1530px) {
   .cutie {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -169,6 +179,7 @@
       border-radius: 50%!important;
       justify-content: center!important;
       margin-right: 2%!important;
+      aspect-ratio:1/1;
     }
     .leader .info {
       margin-top: 1%;
@@ -190,4 +201,8 @@
     .cutie {
       grid-template-columns: repeat(1, 1fr);
     }
+  }
+  @media(max-width:1530px)
+  {
+
   }

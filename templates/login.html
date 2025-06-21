@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4787a0980e.js" crossorigin="anonymous"></script>
-    <link rel="icon" type="image/x-icon" href="p.png">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icon.png') }}">
     <title>Login</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
 
     <section class="main" >
         <div class="login-container">
-        <p class="title">BINE AI REVENIT</p>
+        <p class="title">BINE AI VENIT</p>
         <div class="separator"></div>
         <p class="welcome-message"></p>
             <div class="form-control">
@@ -24,15 +24,15 @@
                 <i class="fa-solid fa-user"></i>
             </div>
             <div class="form-control">
-                <input id="pass" type="password" name="parola"placeholder="Parola">
+                <input id="pass" type="password" name="parola"placeholder="Parolă">
                 <i class="fa-solid fa-lock"></i>
             </div>
-            <button class="submit" id="log" onclick="login()">Login</button>
-                   
+            <button class="submit" id="log" onclick="login()">Intră în cont</button>
+
 
             <img src="{{url_for('static', filename='var.jpeg')}}" class="logo">
         </div>
-         
+
     </section>
 
     <script>

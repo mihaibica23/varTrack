@@ -15,7 +15,7 @@
     <body>
         <h1><center>Date aplicație de credite</center></h1>
         <h3><center>Credite</center></h3>
-        <table>
+        <table style="margin-left:auto;margin-right:auto;">
             <thead>
                 <tr>
                     <th>Nume</th>
@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for elev in users %}
+                {% for elev in users: %}
                 <tr>
                     <td>{{ elev.nume }}</td>
                     <td>{{ elev.clasa }}</td>

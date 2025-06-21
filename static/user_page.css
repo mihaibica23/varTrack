@@ -30,6 +30,7 @@
     height: auto;
     border-radius: 50%;
     margin:1%;
+    aspect-ratio: 1 / 1;
   }
   .info
   {
@@ -37,12 +38,64 @@
     margin:2%;
     font-size: 2.5vw;
   }
+.cutieButCooler
+{
+    width:100%;
+    height:auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.0000001%;
+}
+  .proiect
+{
+    width: 90%;
+    height:auto;
+    background-color: #005a9f;
+    position: relative;
+    border: white solid 1px;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    color:white;
+
+}
+.imgProiect
+{
+  width:100%;
+  height:auto;
+  aspect-ratio:3.23/1.5;
+}
+@media (max-width: 634px) {
+  .cutieButCooler {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media (min-width: 635px) {
+  .cutieButCooler {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (min-width: 1200px) {
+  .cutieButCooler {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+}
+@media (min-width: 1600px) {
+  .cutieButCooler {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
   @media screen and (min-width: 760px) {
-    .info 
+    .info
     {
       font-size: 2vw;
     }
   }
-input{
+input,input[type="file"],.btnR{
   border-radius: 10px;
+  border: 1px solid;
 }

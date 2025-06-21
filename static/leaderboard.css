@@ -1,5 +1,28 @@
-
-
+.cutie
+  {
+    position:absolute;
+    top:16%;
+    left:17.5%;
+    border: 2px solid rgb(9, 56, 243);
+    border-radius: 20px;
+    width:65%;
+    height:auto;
+    margin:auto;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 2px 2px rgba(0,0,0,0.12), 0 4px 4px rgba(0,0,0,0.12), 0 8px 8px rgba(0,0,0,0.12), 0 16px 16px rgba(0,0,0,0.12);
+    background: rgba(255,255,255,0.9);
+    font-size: 1vw;
+  }
+#background-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
 body {
   margin: 0!important;
   padding: 0!important;
@@ -25,7 +48,7 @@ h1, h2 {
   border-radius: 5px!important;
   margin: 0 10px!important;
   width: calc(33% - 20px)!important; /* Adjust width based on number of leaders per row */
-  
+
 }
 
 .leader img {
@@ -53,10 +76,11 @@ h1, h2 {
   .imgProfile {
   /* Removed, not needed for aspect ratio */
   width: 30%!important;
-  height: 100px!important; /* Set a fixed height for responsiveness */
+  height: auto!important; /* Set a fixed height for responsiveness */
   max-width: 100px!important;
   object-fit: cover!important; /* Ensures image fills the container */
   border-radius: 50%; /* Maintains the round shape */
+  aspect-ratio:1/1;
 }
 
 /* Flex order for desktop (default) */
